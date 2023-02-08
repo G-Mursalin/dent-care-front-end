@@ -18,9 +18,9 @@ const Banner = () => {
         <div className="mr-0 lg:mr-8 lg:mt-0 mt-8">
           <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
           <p className="py-6">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the
+            Our goal is to provide each customer with above-standard services
+            with an individual approach. We work in modern premises with the
+            most modern technologies. Book your appointment today
           </p>
           <PrimaryButton>Get Started</PrimaryButton>
         </div>
