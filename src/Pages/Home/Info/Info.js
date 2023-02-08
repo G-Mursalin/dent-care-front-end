@@ -33,7 +33,7 @@ const Info = () => {
       {infoData.map((info) => (
         <div
           key={info.id}
-          className={`card lg:card-side bg-base-100 shadow-xl lg:px-8 lg:py-0 py-8 ${info.bgColor}`}
+          className={`flex justify-center items-center card lg:card-side bg-base-100 shadow-xl lg:px-8 lg:py-0 py-8 ${info.bgColor}`}
         >
           <figure>
             <img src={info.img} alt="title" />

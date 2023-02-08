@@ -18,9 +18,10 @@ const Banner = () => {
         <div className="mr-0 lg:mr-8 lg:mt-0 mt-8">
           <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
           <p className="py-6">
-            Our goal is to provide each customer with above-standard services
-            with an individual approach. We work in modern premises with the
-            most modern technologies. Book your appointment today
+            We strive towards perfection which is why all our cases are based on
+            the concept of Happy Smile Design. In our work, we are led by modern
+            protocols of digital dentistry, and modern technology and we
+            continuously educate ourselves. Welcome to Dent Care!
           </p>
           <PrimaryButton>Get Started</PrimaryButton>
         </div>
