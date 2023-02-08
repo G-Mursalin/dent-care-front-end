@@ -2,8 +2,11 @@ import React from "react";
 import doctor from "./../../../assets/images/doctor-small.png";
 import appointment from "./../../../assets/images/appointment.png";
 import PrimaryButton from "../../Shared/Buttons/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 const HomeAppointment = () => {
+  const navigate = useNavigate();
+
   return (
     <section
       className="flex justify-center items-center flex-col lg:flex-row mt-40"
@@ -22,16 +25,11 @@ const HomeAppointment = () => {
         <p className="text-white">
           Our goal is to provide each customer with above-standard services with
           an individual approach. We work in modern premises with the most
-          modern technologies. Book your appointment today. We are professionals
-          in dental hygiene and teeth whitening. Our goal is to provide superior
-          services in the field of teeth whitening and dental hygiene, which
-          include an individual approach, customer education, and various
-          benefits that customers can use. We perform professional dental
-          hygiene and gentle teeth whitening without hydrogen peroxide in our
-          modern premises, using the most modern methods and technologies in our
-          work.
+          modern technologies. Book your appointment today.
         </p>
-        <PrimaryButton>Get Started</PrimaryButton>
+        <div onClick={() => navigate("/appointment")}>
+          <PrimaryButton>Get Started</PrimaryButton>
+        </div>
       </div>
     </section>
   );

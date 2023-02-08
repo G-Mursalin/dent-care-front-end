@@ -4,6 +4,7 @@ import HomeAppointment from "./HomeAppointment/HomeAppointment";
 import HomeServices from "./HomeServices/HomeServices";
 import Info from "./Info/Info";
 import ServicesBanner from "./ServicesBanner/ServicesBanner";
+import Testimonial from "./Testimonial/Testimonial";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <HomeServices />
       <ServicesBanner />
       <HomeAppointment />
+      <Testimonial />
     </React.Fragment>
   );
 };

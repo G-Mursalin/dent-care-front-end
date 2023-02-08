@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../Shared/Buttons/PrimaryButton";
 import treatment from "./../../../assets/images/treatment.png";
 
 const ServicesBanner = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="hero min-h-screen md:px-16 px-5 mt-20">
       <div className="flex justify-center items-center flex-col lg:flex-row">
@@ -24,7 +27,9 @@ const ServicesBanner = () => {
             hydrogen peroxide in our modern premises, using the most modern
             methods and technologies in our work.
           </p>
-          <PrimaryButton>Get Started</PrimaryButton>
+          <div onClick={() => navigate("/appointment")}>
+            <PrimaryButton>Get Started</PrimaryButton>
+          </div>
         </div>
       </div>
     </section>

@@ -2,8 +2,11 @@ import React from "react";
 import PrimaryButton from "../../Shared/Buttons/PrimaryButton";
 import chair from "./../../../assets/images/chair.png";
 import bg from "./../../../assets/images/bg.png";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate();
+
   return (
     <section
       className="hero min-h-screen md:px-16 px-5"
@@ -23,7 +26,9 @@ const Banner = () => {
             protocols of digital dentistry, and modern technology and we
             continuously educate ourselves. Welcome to Dent Care!
           </p>
-          <PrimaryButton>Get Started</PrimaryButton>
+          <div onClick={() => navigate("/appointment")}>
+            <PrimaryButton>Get Started</PrimaryButton>
+          </div>
         </div>
       </div>
     </section>
