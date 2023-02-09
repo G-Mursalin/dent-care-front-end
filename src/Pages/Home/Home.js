@@ -1,6 +1,7 @@
 import React from "react";
 import Banner from "./Banner/Banner";
 import HomeAppointment from "./HomeAppointment/HomeAppointment";
+import HomeContactUs from "./HomeContactUs/HomeContactUs";
 import HomeServices from "./HomeServices/HomeServices";
 import Info from "./Info/Info";
 import ServicesBanner from "./ServicesBanner/ServicesBanner";
@@ -15,6 +16,7 @@ const Home = () => {
       <ServicesBanner />
       <HomeAppointment />
       <Testimonial />
+      <HomeContactUs />
     </React.Fragment>
   );
 };
