@@ -1,10 +1,27 @@
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const NavBar = () => {
   const [showNavItems, setShowNavItems] = useState(false);
   const [showImageItems, setShowImageItems] = useState(false);
+  const { user, userLogOut, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  // Handle Logout
+  const handleLogOut = () => {
+    userLogOut()
+      .then(() => {
+        toast.success("Successfully LogOut");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error("Please Try Again");
+      });
+  };
+
+  // Navbar Items
   const navItems = (
     <Fragment>
       <li>
@@ -22,12 +39,21 @@ const NavBar = () => {
       <li>
         <Link to="/contact-us">Contact Us</Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
-        <Link to="/signup">Signup</Link>
-      </li>
+      {user && (
+        <li>
+          <Link to="/dashboard">Dashboard</Link>
+        </li>
+      )}
+      {!user && !loading && (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/signup">Signup</Link>
+          </li>
+        </>
+      )}
     </Fragment>
   );
 
@@ -70,31 +96,14 @@ const NavBar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
+
       <div className="navbar-end">
         {/* If User Login Then Show It */}
-        <div
-          onClick={() => setShowImageItems((preState) => !preState)}
-          className="dropdown dropdown-end"
-        >
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://xsgames.co/randomusers/assets/avatars/male/6.jpg" />
-            </div>
-          </label>
-          {showImageItems && (
-            <ul
-              tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a className="justify-between">Profile</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          )}
-        </div>
+        {user?.uid ? (
+          <button onClick={handleLogOut} className="btn  btn-sm btn-outline">
+            Logout
+          </button>
+        ) : null}
       </div>
     </div>
   );

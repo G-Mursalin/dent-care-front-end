@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const Login = () => {
   const {
@@ -8,9 +10,27 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { userLogin, setUser, setLoading } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmitForm = (data) => {
-    console.log(data);
+    // Firebase Login
+    userLogin(data.email, data.password)
+      .then((userCredential) => {
+        setError("");
+        toast.success("Successfully Login");
+        setUser(userCredential?.user);
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -64,10 +84,6 @@ const Login = () => {
                     value: true,
                     message: "Password is required",
                   },
-                  minLength: {
-                    value: 6,
-                    message: "Password must be more than 6 character",
-                  },
                 })}
               />
               <label className="label">
@@ -76,17 +92,13 @@ const Login = () => {
                     {errors.password.message}
                   </span>
                 )}
-                {errors.password?.type === "minLength" && (
-                  <span className="label-text-alt text-red-500">
-                    {errors.password.message}
-                  </span>
-                )}
               </label>
             </div>
+            {error ? <span className="text-red-600">{error}</span> : null}
             <input
               type="submit"
               value="LOGIN"
-              className="btn text-white bg-accent border-0 py-2 px-6 w-full focus:outline-none cursor-pointer rounded-lg text-lg"
+              className="btn text-white bg-accent mt-2 border-0 py-2 px-6 w-full focus:outline-none cursor-pointer rounded-lg text-lg"
             />
           </form>
           <p className="text-center">

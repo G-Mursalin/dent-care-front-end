@@ -1,17 +1,64 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Contexts/AuthProvider";
+import uploadImageToImbbAndGetLink from "../../../utils/uploadImageToImbbAndGetLink";
 
 export const Signup = () => {
+  const { createUser, userUpdateProfile, verifyEmail } =
+    useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [wait, setWait] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
-  const onSubmitForm = (data) => {
-    console.log(data);
+  // SignUp Handler
+  const onSubmitForm = async (data) => {
+    setWait(true);
+    // Upload Image to Imbb and Get Link
+    const photoURL = await uploadImageToImbbAndGetLink(data.photo[0]);
+
+    // Create User Via firebase
+    createUser(data.email, data.password)
+      .then((userCredential) => {
+        setError("");
+        handleUpdateUserProfile(data.name, photoURL);
+        handleEmailVerification();
+        toast.success(
+          "Successfully created your account. A verification link sends to your email. Please verify your email. (Check the spam folder if it's not in the inbox)"
+        );
+        setWait(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        setWait(false);
+        setError(error.message);
+      });
   };
+
+  // Handle Update User Profile
+  const handleUpdateUserProfile = (displayName, photoURL) => {
+    userUpdateProfile({ displayName, photoURL })
+      .then(() => {})
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
+  // Handle Email Verification
+  const handleEmailVerification = () => {
+    verifyEmail()
+      .then(() => {})
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <div className="flex h-screen justify-center items-center mb-10 md:mt-10 mt-4 md:px-16 px-5">
       <div className="card w-[500px] bg-base-100 shadow-xl">
@@ -140,11 +187,13 @@ export const Signup = () => {
                 )}
               </label>
             </div>
-            <input
+            {error ? <span className="text-red-600">{error}</span> : null}
+            <button
               type="submit"
-              value="SIGNUP"
-              className="btn text-white bg-accent border-0 py-2 px-6 w-full focus:outline-none cursor-pointer rounded-lg text-lg"
-            />
+              className="btn text-white mt-2 bg-accent border-0 py-2 px-6 w-full focus:outline-none cursor-pointer rounded-lg text-lg"
+            >
+              {wait ? "Please Wait..." : "Signup"}
+            </button>
           </form>
           <p className="text-center">
             Already have an account?
