@@ -1,19 +1,55 @@
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const AppointmentBookingModal = ({ setTreatment, treatment, date }) => {
   const { _id, name, slots, price } = treatment;
   const [isDateSelected, setIsDateSelected] = useState(true);
+  const { user } = useContext(AuthContext);
 
   //   Handle User Bookings
   const handleBooking = (e) => {
     e.preventDefault();
     const date = e.target.date.value;
     const slot = e.target.slot.value;
+    const userName = e.target.userName.value;
+    const email = e.target.email.value;
+    const phone = e.target.phone.value;
     if (!/\d/.test(date)) {
       setIsDateSelected(false);
       return;
     }
+
+    const booking = {
+      serviceId: _id,
+      serviceName: name,
+      servicePrice: price,
+      appointmentDate: date,
+      slot,
+      patientName: userName,
+      patientEmail: email,
+      patientPhone: phone,
+    };
+
+    //  Sent Booking data to the server
+    fetch("http://localhost:5000/api/v1/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status === "fail") {
+          toast.error(data.message);
+        } else {
+          toast.success(data.status);
+        }
+        setTreatment(null);
+      });
   };
 
   return (
@@ -66,9 +102,9 @@ const AppointmentBookingModal = ({ setTreatment, treatment, date }) => {
             <input
               type="text"
               required
-              name="name"
-              placeholder="Your Name"
-              value="User Name"
+              name="userName"
+              placeholder="User Name"
+              value={user?.displayName}
               disabled
               className="input input-bordered border-secondary w-full"
             />
@@ -77,7 +113,7 @@ const AppointmentBookingModal = ({ setTreatment, treatment, date }) => {
               required
               name="email"
               placeholder="Email Address"
-              value="User Email"
+              value={user?.email}
               disabled
               className="input input-bordered border-secondary w-full"
             />
