@@ -1,11 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 
 const NavBar = () => {
   const [showNavItems, setShowNavItems] = useState(false);
-  const [showImageItems, setShowImageItems] = useState(false);
   const { user, userLogOut, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 

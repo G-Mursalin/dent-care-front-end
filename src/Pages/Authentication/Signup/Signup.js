@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
 import uploadImageToImbbAndGetLink from "../../../utils/uploadImageToImbbAndGetLink";
+import GoogleSignUp from "../SocialSignUp/GoogleSignUp";
 
 export const Signup = () => {
   const { createUser, userUpdateProfile, verifyEmail } =
@@ -137,7 +138,8 @@ export const Signup = () => {
                     message: "Email is required",
                   },
                   pattern: {
-                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    value:
+                      /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$/,
                     message: "Provide a valid email",
                   },
                 })}
@@ -202,9 +204,7 @@ export const Signup = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline btn-accent uppercase">
-            Continue with google
-          </button>
+          <GoogleSignUp />
         </div>
       </div>
     </div>

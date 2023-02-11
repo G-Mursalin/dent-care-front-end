@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
+import GoogleSignUp from "../SocialSignUp/GoogleSignUp";
 
 const Login = () => {
   const {
@@ -108,9 +109,7 @@ const Login = () => {
             </Link>
           </p>
           <div className="divider">OR</div>
-          <button className="btn btn-outline btn-accent uppercase">
-            Continue with google
-          </button>
+          <GoogleSignUp />
         </div>
       </div>
     </div>
