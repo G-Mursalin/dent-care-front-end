@@ -8,6 +8,7 @@ import ContactUs from "../../Pages/ContactUs/ContactUs";
 import Dashboard from "../../Pages/Dashboard/Dashboard";
 import Home from "../../Pages/Home/Home";
 import Reviews from "../../Pages/Reviews/Reviews";
+import PageNotFound from "../../Pages/Shared/PageNotFound/PageNotFound";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -35,5 +36,9 @@ export const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
   },
 ]);

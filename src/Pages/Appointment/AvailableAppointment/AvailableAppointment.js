@@ -1,22 +1,25 @@
 import { format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "react-query";
+import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
+import Loading from "../../Shared/Loading/Loading";
 import AppointmentBookingModal from "../AppointmentBookingModal/AppointmentBookingModal";
 import AppointmentOptions from "../AppointmentOptions/AppointmentOptions";
 
 const AvailableAppointment = ({ onSelectedDate }) => {
   const [treatment, setTreatment] = useState(null);
-  const [appointmentOptions, setAppointmentOptions] = useState([]);
   let formattedDate = "";
   if (onSelectedDate) {
     formattedDate = format(onSelectedDate, "PP");
   }
 
-  //   Fetch Appointment Options
-  useEffect(() => {
-    fetch("appointmentOptions.json")
-      .then((res) => res.json())
-      .then((data) => setAppointmentOptions(data));
-  }, []);
+  const { isLoading, data: services } = useQuery(["services"], () =>
+    fetch("http://localhost:5000/api/v1/services").then((res) => res.json())
+  );
+
+  if (isLoading) return <Loading />;
+  if (services.status === "fail")
+    return <ErrorMessage message={services.message} />;
 
   return (
     <section className="md:px-16 px-5 mb-32">
@@ -28,7 +31,7 @@ const AvailableAppointment = ({ onSelectedDate }) => {
         )}
       </h3>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-col-1 gap-8">
-        {appointmentOptions.map((service, i) => (
+        {services.data.services.map((service, i) => (
           <AppointmentOptions
             key={i}
             service={service}
