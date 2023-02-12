@@ -13,8 +13,14 @@ const AvailableAppointment = ({ onSelectedDate }) => {
     formattedDate = format(onSelectedDate, "PP");
   }
 
-  const { isLoading, data: services } = useQuery(["services"], () =>
-    fetch("http://localhost:5000/api/v1/services").then((res) => res.json())
+  const {
+    isLoading,
+    data: services,
+    refetch,
+  } = useQuery(["services", formattedDate], () =>
+    fetch(`http://localhost:5000/api/v1/services?date=${formattedDate}`).then(
+      (res) => res.json()
+    )
   );
 
   if (isLoading) return <Loading />;
@@ -43,6 +49,7 @@ const AvailableAppointment = ({ onSelectedDate }) => {
         <AppointmentBookingModal
           setTreatment={setTreatment}
           treatment={treatment}
+          refetch={refetch}
           date={onSelectedDate}
         />
       )}
