@@ -28,7 +28,7 @@ export const Signup = () => {
     createUser(data.email, data.password)
       .then((userCredential) => {
         setError("");
-        handleUpdateUserProfile(data.name, photoURL);
+        handleUpdateUserProfile(data.name, photoURL, data.email);
         handleEmailVerification();
         toast.success(
           "Successfully created your account. A verification link sends to your email. Please verify your email. (Check the spam folder if it's not in the inbox)"
@@ -42,10 +42,28 @@ export const Signup = () => {
       });
   };
 
+  // Save User To Backend Database
+  const saveUserToDatabase = (email) => {
+    fetch("http://localhost:5000/api/v1/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((res) => res.json())
+      .then((data) => {})
+      .catch((err) => {
+        toast.error("Error");
+      });
+  };
+
   // Handle Update User Profile
-  const handleUpdateUserProfile = (displayName, photoURL) => {
+  const handleUpdateUserProfile = (displayName, photoURL, email) => {
     userUpdateProfile({ displayName, photoURL })
-      .then(() => {})
+      .then(() => {
+        saveUserToDatabase(email);
+      })
       .catch((error) => {
         toast.error(error.message);
       });
