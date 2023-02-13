@@ -99,11 +99,32 @@ const NavBar = () => {
       <div className="navbar-end">
         {/* If User Login Then Show It */}
         {user?.uid ? (
-          <button onClick={handleLogOut} className="btn  btn-sm btn-outline">
+          <button onClick={handleLogOut} className="btn btn-sm btn-outline">
             Logout
           </button>
         ) : null}
       </div>
+      <label
+        tabIndex={0}
+        role="button"
+        htmlFor="dashboard-drawer"
+        className="btn btn-ghost drawer-button lg:hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M4 6h16M4 12h8m-8 6h16"
+          />
+        </svg>
+      </label>
     </div>
   );
 };
