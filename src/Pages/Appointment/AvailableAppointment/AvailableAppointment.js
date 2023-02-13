@@ -13,6 +13,7 @@ const AvailableAppointment = ({ onSelectedDate }) => {
     formattedDate = format(onSelectedDate, "PP");
   }
 
+  // Get Data From Backend
   const {
     isLoading,
     data: services,
@@ -23,8 +24,11 @@ const AvailableAppointment = ({ onSelectedDate }) => {
     )
   );
 
+  // Handle Errors and Loading
   if (isLoading) return <Loading />;
   if (services.status === "fail")
+    return <ErrorMessage message={services.message} />;
+  if (services.status === "error")
     return <ErrorMessage message={services.message} />;
 
   return (
