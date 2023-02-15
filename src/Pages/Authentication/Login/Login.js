@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
+import useToken from "../../../Hooks/useToken";
 import GoogleSignUp from "../SocialSignUp/GoogleSignUp";
 
 const Login = () => {
@@ -15,7 +16,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+  const [loginEmail, setLoginEmail] = useState("");
+  const [token] = useToken(loginEmail);
   const from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const onSubmitForm = (data) => {
     // Firebase Login
@@ -24,7 +31,7 @@ const Login = () => {
         setError("");
         toast.success("Successfully Login");
         setUser(userCredential?.user);
-        navigate(from, { replace: true });
+        setLoginEmail(data.email);
       })
       .catch((error) => {
         setError(error.message);

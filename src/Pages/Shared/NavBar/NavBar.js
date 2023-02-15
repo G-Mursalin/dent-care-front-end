@@ -13,6 +13,7 @@ const NavBar = () => {
     userLogOut()
       .then(() => {
         toast.success("Successfully LogOut");
+        localStorage.removeItem("accessToken");
         navigate("/");
       })
       .catch((error) => {

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider";
+import useToken from "../../../Hooks/useToken";
 import uploadImageToImbbAndGetLink from "../../../utils/uploadImageToImbbAndGetLink";
 import GoogleSignUp from "../SocialSignUp/GoogleSignUp";
 
@@ -10,6 +11,8 @@ export const Signup = () => {
   const { createUser, userUpdateProfile, verifyEmail } =
     useContext(AuthContext);
   const [error, setError] = useState("");
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const [wait, setWait] = useState(false);
   const navigate = useNavigate();
   const {
@@ -17,6 +20,10 @@ export const Signup = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
+  if (token) {
+    navigate("/");
+  }
 
   // SignUp Handler
   const onSubmitForm = async (data) => {
@@ -34,7 +41,6 @@ export const Signup = () => {
           "Successfully created your account. A verification link sends to your email. Please verify your email. (Check the spam folder if it's not in the inbox)"
         );
         setWait(false);
-        navigate("/");
       })
       .catch((error) => {
         setWait(false);
@@ -52,7 +58,11 @@ export const Signup = () => {
       body: JSON.stringify({ email }),
     })
       .then((res) => res.json())
-      .then((data) => {})
+      .then((data) => {
+        if (data.status === "success") {
+          setCreatedUserEmail(email);
+        }
+      })
       .catch((err) => {
         toast.error("Error");
       });

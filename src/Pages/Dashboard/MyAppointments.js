@@ -12,7 +12,13 @@ const MyAppointments = () => {
     ["appointments", user?.email],
     () =>
       fetch(
-        `http://localhost:5000/api/v1/bookings?patientEmail=${user?.email}`
+        `http://localhost:5000/api/v1/bookings?patientEmail=${user?.email}`,
+        {
+          headers: {
+            "Content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       ).then((res) => res.json())
   );
 
