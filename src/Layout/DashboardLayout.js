@@ -1,8 +1,16 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
+import Loading from "../Pages/Shared/Loading/Loading";
 import NavBar from "../Pages/Shared/NavBar/NavBar";
 
 const DashboardLayout = () => {
+  const [admin, adminIsLoading] = useAdmin();
+
+  if (adminIsLoading) {
+    return <Loading />;
+  }
+
   return (
     <main>
       <NavBar />
@@ -21,9 +29,11 @@ const DashboardLayout = () => {
             <li>
               <Link to="/dashboard">My Appointments</Link>
             </li>
-            <li>
-              <a>Sidebar Item 2</a>
-            </li>
+            {admin && (
+              <li>
+                <Link to="/dashboard/all-users">All Users</Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

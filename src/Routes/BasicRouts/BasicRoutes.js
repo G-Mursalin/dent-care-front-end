@@ -6,10 +6,12 @@ import Appointment from "../../Pages/Appointment/Appointment";
 import Login from "../../Pages/Authentication/Login/Login";
 import { Signup } from "../../Pages/Authentication/Signup/Signup";
 import ContactUs from "../../Pages/ContactUs/ContactUs";
+import AllUsers from "../../Pages/Dashboard/AllUsers";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments";
 import Home from "../../Pages/Home/Home";
 import Reviews from "../../Pages/Reviews/Reviews";
 import PageNotFound from "../../Pages/Shared/PageNotFound/PageNotFound";
+import AdminRoute from "../PrivateRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -46,8 +48,17 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         element: <MyAppointments />,
       },
+      {
+        path: "/dashboard/all-users",
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
+      },
     ],
   },
+
   {
     path: "*",
     element: <PageNotFound />,
