@@ -6,6 +6,7 @@ import Appointment from "../../Pages/Appointment/Appointment";
 import Login from "../../Pages/Authentication/Login/Login";
 import { Signup } from "../../Pages/Authentication/Signup/Signup";
 import ContactUs from "../../Pages/ContactUs/ContactUs";
+import AddDoctor from "../../Pages/Dashboard/AddDoctor";
 import AllUsers from "../../Pages/Dashboard/AllUsers";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments";
 import Home from "../../Pages/Home/Home";
@@ -32,7 +33,10 @@ export const router = createBrowserRouter([
       { path: "/reviews", element: <Reviews /> },
       { path: "/about-us", element: <AboutUs /> },
       { path: "/contact-us", element: <ContactUs /> },
-      { path: "/login", element: <Login /> },
+      {
+        path: "/login",
+        element: <Login />,
+      },
       { path: "/signup", element: <Signup /> },
     ],
   },
@@ -53,6 +57,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-doctor",
+        element: (
+          <AdminRoute>
+            <AddDoctor />
           </AdminRoute>
         ),
       },
