@@ -25,7 +25,6 @@ const AllUsers = () => {
   if (users.status === "error") return <ErrorMessage message={users.message} />;
 
   const handleMakeAdmin = (id) => {
-    console.log(id);
     fetch(`http://localhost:5000/api/v1/users/${id}`, {
       method: "PATCH",
       headers: {
@@ -51,8 +50,8 @@ const AllUsers = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
-              <th>Admin</th>
-              <th>Delete</th>
+              <th>Action</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -73,7 +72,7 @@ const AllUsers = () => {
                   )}
                 </td>
                 <td>
-                  <button className="btn btn-xs">Delete</button>
+                  <button className="btn btn-xs btn-error">Delete</button>
                 </td>
               </tr>
             ))}
