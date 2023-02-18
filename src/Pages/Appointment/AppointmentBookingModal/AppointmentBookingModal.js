@@ -49,6 +49,8 @@ const AppointmentBookingModal = ({
       .then((data) => {
         if (data.status === "fail") {
           toast.error(data.message);
+        } else if (data.status === "error") {
+          toast.error(data.message);
         } else {
           toast.success(data.status);
         }

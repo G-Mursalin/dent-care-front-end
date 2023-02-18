@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import uploadImageToImbbAndGetLink from "../../utils/uploadImageToImbbAndGetLink";
 import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
 import Loading from "../Shared/Loading/Loading";
 
@@ -15,9 +17,12 @@ const AddDoctor = () => {
 
   // Get services-name From Backend
   const { isLoading, data: servicesName } = useQuery(["servicesName"], () =>
-    fetch("http://localhost:5000/api/v1/services/name").then((res) =>
-      res.json()
-    )
+    fetch("http://localhost:5000/api/v1/services/name", {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => res.json())
   );
 
   // Handle Errors and Loading
@@ -29,7 +34,37 @@ const AddDoctor = () => {
 
   // Form Handler
   const onSubmitForm = async (data) => {
-    console.log(data);
+    setWait(true);
+    // Upload Image to Imbb and Get Link
+    const imgUrl = await uploadImageToImbbAndGetLink(data.photo[0]);
+
+    const doctorData = {
+      name: data.name,
+      email: data.email,
+      specialty: data.specialty,
+      imgUrl,
+    };
+
+    // Send Data to Backend
+    fetch("http://localhost:5000/api/v1/doctors", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+      body: JSON.stringify(doctorData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "fail") {
+          toast.error(data.message);
+        } else if (data.status === "error") {
+          toast.error(data.message);
+        } else {
+          toast.success(data.status);
+        }
+        setWait(false);
+      });
   };
 
   return (
