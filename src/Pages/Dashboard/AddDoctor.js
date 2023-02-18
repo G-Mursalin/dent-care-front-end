@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import uploadImageToImbbAndGetLink from "../../utils/uploadImageToImbbAndGetLink";
 import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
 import Loading from "../Shared/Loading/Loading";
@@ -9,6 +10,7 @@ import Loading from "../Shared/Loading/Loading";
 const AddDoctor = () => {
   const [wait, setWait] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -62,6 +64,7 @@ const AddDoctor = () => {
           toast.error(data.message);
         } else {
           toast.success(data.status);
+          navigate("/dashboard/all-doctors");
         }
         setWait(false);
       });

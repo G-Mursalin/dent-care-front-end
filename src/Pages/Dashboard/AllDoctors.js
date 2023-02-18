@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
 import ConfirmationModal from "../Shared/ConfirmationModal/ConfirmationModal";
 import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
@@ -7,18 +8,12 @@ import Loading from "../Shared/Loading/Loading";
 const AllDoctors = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
 
-  //   Handle Close Modal
-  const handleCloseModal = () => {
-    setDeletingDoctor(null);
-  };
-
-  //   Handle Delete Doctor
-  const handleDeleteDoctor = (data) => {
-    console.log(data);
-  };
-
   // Get Doctors Data From Backend
-  const { isLoading, data: doctors } = useQuery(["doctors"], () =>
+  const {
+    isLoading,
+    data: doctors,
+    refetch,
+  } = useQuery(["doctors"], () =>
     fetch("http://localhost:5000/api/v1/doctors", {
       headers: {
         "Content-type": "application/json",
@@ -26,6 +21,34 @@ const AllDoctors = () => {
       },
     }).then((res) => res.json())
   );
+
+  //   Handle Close Modal
+  const handleCloseModal = () => {
+    setDeletingDoctor(null);
+  };
+
+  //   Handle Delete Doctor
+  const handleDeleteDoctor = (data) => {
+    // Send Data to Backend
+    fetch(`http://localhost:5000/api/v1/doctors/${data._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "fail") {
+          toast.error(data.message);
+        } else if (data.status === "error") {
+          toast.error(data.message);
+        } else {
+          toast.success(data.status);
+          refetch();
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   // Handle Errors and Loading
   if (isLoading) return <Loading />;
