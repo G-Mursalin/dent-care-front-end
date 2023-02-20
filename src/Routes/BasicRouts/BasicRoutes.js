@@ -10,6 +10,7 @@ import AddDoctor from "../../Pages/Dashboard/AddDoctor";
 import AllDoctors from "../../Pages/Dashboard/AllDoctors";
 import AllUsers from "../../Pages/Dashboard/AllUsers";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 import Home from "../../Pages/Home/Home";
 import Reviews from "../../Pages/Reviews/Reviews";
 import PageNotFound from "../../Pages/Shared/PageNotFound/PageNotFound";
@@ -76,6 +77,21 @@ export const router = createBrowserRouter([
             <AllDoctors />
           </AdminRoute>
         ),
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: (
+          <AdminRoute>
+            <Payment />
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/v1/bookings?_id=${params.id}`, {
+            headers: {
+              "Content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }),
       },
     ],
   },

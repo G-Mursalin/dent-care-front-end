@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
 import Loading from "../Shared/Loading/Loading";
@@ -43,7 +44,8 @@ const MyAppointments = () => {
               <th>Date</th>
               <th>Time</th>
               <th>Treatment</th>
-              <th>Payment</th>
+              <th>Price</th>
+              <th>Action</th>
               <th>Transaction ID</th>
             </tr>
           </thead>
@@ -55,6 +57,17 @@ const MyAppointments = () => {
                 <td>{val.appointmentDate}</td>
                 <td>{val.slot}</td>
                 <td>{val.serviceName}</td>
+                <td>{val.servicePrice}</td>
+                <td>
+                  {val.servicePrice && !val.paid && (
+                    <Link to={`/dashboard/payment/${val._id}`}>
+                      <button className="btn btn-xs btn-primary">Pay</button>
+                    </Link>
+                  )}
+                  {val.servicePrice && val.paid && (
+                    <span className="text-success">Paid</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -76,7 +76,6 @@ const AddDoctor = () => {
       <div className="flex mb-10 md:mt-10 mt-4 md:px-16 px-5">
         <div className="card w-[500px] bg-base-100 shadow-xl">
           <div className="card-body">
-            <h2 className="card-title mx-auto">SignUp</h2>
             <form onSubmit={handleSubmit(onSubmitForm)}>
               {/* Name */}
               <div className="form-control w-full">
