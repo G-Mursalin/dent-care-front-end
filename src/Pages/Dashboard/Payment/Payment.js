@@ -1,10 +1,27 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
+import CheckoutForm from "./CheckoutForm";
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
   const data = useLoaderData();
-  const { serviceName, servicePrice, slot, appointmentDate, patientName } =
-    data.data.bookings[0];
+  const {
+    _id,
+    serviceName,
+    servicePrice,
+    slot,
+    appointmentDate,
+    patientName,
+    patientEmail,
+  } = data.data.bookings[0];
+
+  // Handle Errors From Server
+  if (data.status === "fail") return <ErrorMessage message={data.message} />;
+  if (data.status === "error") return <ErrorMessage message={data.message} />;
 
   return (
     <div>
@@ -41,6 +58,18 @@ const Payment = () => {
             <p className="text-lg font-bold">
               ZIP:&nbsp;<span className="font-normal">Any 5 Digits</span>
             </p>
+          </div>
+        </div>
+        <div className="card text-primary-content shadow-lg">
+          <div className="card-body">
+            <Elements stripe={stripePromise}>
+              <CheckoutForm
+                patientName={patientName}
+                patientEmail={patientEmail}
+                servicePrice={servicePrice}
+                _id={_id}
+              />
+            </Elements>
           </div>
         </div>
       </div>

@@ -68,6 +68,11 @@ const MyAppointments = () => {
                     <span className="text-success">Paid</span>
                   )}
                 </td>
+                <td>
+                  {val.servicePrice && val.paid && val.transactionId && (
+                    <span>{val.transactionId}</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
