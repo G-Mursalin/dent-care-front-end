@@ -3,7 +3,13 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
 
-const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
+const CheckoutForm = ({
+  patientName,
+  patientEmail,
+  servicePrice,
+  _id,
+  paid,
+}) => {
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
   const [transactionId, setTransactionId] = useState("");
@@ -18,6 +24,7 @@ const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify({ price: servicePrice }),
     })
@@ -40,8 +47,8 @@ const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
   // Form Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!stripe || !elements) {
+    setProcessing(true);
+    if (!stripe || !elements || paid) {
       return;
     }
 
@@ -83,7 +90,7 @@ const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
       transactionId: paymentIntent.id,
       paid: true,
     };
-    setProcessing(true);
+
     fetch(`http://localhost:5000/api/v1/bookings/${_id}`, {
       method: "PATCH",
       headers: {
@@ -103,10 +110,6 @@ const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
         setProcessing(false);
       });
   };
-
-  if (processing) {
-    return <p>Please Wait...</p>;
-  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -134,13 +137,17 @@ const CheckoutForm = ({ patientName, patientEmail, servicePrice, _id }) => {
           {transactionId}
         </p>
       )}
-      <button
-        className="btn btn-sm btn-primary mt-3"
-        type="submit"
-        disabled={!stripe || !clientSecret || success}
-      >
-        Pay
-      </button>
+
+      {!paid && (
+        <button
+          className="btn btn-sm btn-primary mt-3"
+          type="submit"
+          disabled={!stripe || !clientSecret || success || processing}
+        >
+          Pay
+        </button>
+      )}
+      {paid && <p className="mt-3">You already pay for this service</p>}
     </form>
   );
 };

@@ -73,8 +73,8 @@ const AddDoctor = () => {
   return (
     <section>
       <h2 className="my-3 text-2xl">Add Doctor</h2>
-      <div className="flex mb-10 md:mt-10 mt-4 md:px-16 px-5">
-        <div className="card w-[500px] bg-base-100 shadow-xl">
+      <div className="mb-10 md:mt-10 mt-4 md:px-16 px-5">
+        <div className="bg-base-100 shadow-xl">
           <div className="card-body">
             <form onSubmit={handleSubmit(onSubmitForm)}>
               {/* Name */}

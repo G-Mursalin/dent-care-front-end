@@ -1,10 +1,44 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
+import { AuthContext } from "../../Contexts/AuthProvider";
+import ConfirmationModal from "../Shared/ConfirmationModal/ConfirmationModal";
 import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
 import Loading from "../Shared/Loading/Loading";
 
 const AllUsers = () => {
+  const [deletingUser, setDeletingUser] = useState(null);
+  const { user } = useContext(AuthContext);
+
+  //   Handle Close Modal
+  const handleCloseModal = () => {
+    setDeletingUser(null);
+  };
+
+  //   Handle Delete Doctor
+  const handleDeleteUser = (data) => {
+    console.log(data._id);
+    // Send Data to Backend
+    fetch(`http://localhost:5000/api/v1/users/${data._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "fail") {
+          toast.error(data.message);
+        } else if (data.status === "error") {
+          toast.error(data.message);
+        } else {
+          toast.success(data.status);
+          refetch();
+        }
+      })
+      .catch((err) => toast.error(err.message));
+  };
+
   // Get Data From Backend
   const {
     isLoading,
@@ -47,7 +81,6 @@ const AllUsers = () => {
           <thead>
             <tr>
               <th></th>
-              <th>Name</th>
               <th>Email</th>
               <th>Role</th>
               <th>Action</th>
@@ -58,8 +91,12 @@ const AllUsers = () => {
             {users.data.users.map((val, i) => (
               <tr className="hover" key={val._id}>
                 <th>{i + 1}</th>
-                <td>{val.name}</td>
-                <td>{val.email}</td>
+                <td>
+                  {val.email}
+                  {val.email === user.email && (
+                    <span className="font-bold">(You)</span>
+                  )}
+                </td>
                 <td>{val.role}</td>
                 <td>
                   {val.role !== "admin" && (
@@ -72,13 +109,30 @@ const AllUsers = () => {
                   )}
                 </td>
                 <td>
-                  <button className="btn btn-xs btn-error">Delete</button>
+                  {val.email !== user.email && (
+                    <label
+                      onClick={() => setDeletingUser(val)}
+                      htmlFor="confirm-modal"
+                      className="btn btn-xs btn-error"
+                    >
+                      Delete
+                    </label>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {deletingUser && (
+        <ConfirmationModal
+          title="Are You Sure ?"
+          message={`If you delete ${deletingUser.email}, data can't be recover!!`}
+          handleCloseModal={handleCloseModal}
+          modalData={deletingUser}
+          successAction={handleDeleteUser}
+        />
+      )}
     </section>
   );
 };

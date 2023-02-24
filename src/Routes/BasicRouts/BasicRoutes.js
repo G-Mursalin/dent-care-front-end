@@ -10,6 +10,7 @@ import AddDoctor from "../../Pages/Dashboard/AddDoctor";
 import AllDoctors from "../../Pages/Dashboard/AllDoctors";
 import AllUsers from "../../Pages/Dashboard/AllUsers";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments";
+import MyProfile from "../../Pages/Dashboard/MyProfile/MyProfile";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
 import Home from "../../Pages/Home/Home";
 import Reviews from "../../Pages/Reviews/Reviews";
@@ -80,11 +81,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/payment/:id",
-        element: (
-          <AdminRoute>
-            <Payment />
-          </AdminRoute>
-        ),
+        element: <Payment />,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/v1/bookings?_id=${params.id}`, {
             headers: {
@@ -92,6 +89,10 @@ export const router = createBrowserRouter([
               authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           }),
+      },
+      {
+        path: "/dashboard/my-profile",
+        element: <MyProfile />,
       },
     ],
   },

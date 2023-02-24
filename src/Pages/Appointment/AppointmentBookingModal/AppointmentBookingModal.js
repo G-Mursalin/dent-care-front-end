@@ -51,8 +51,10 @@ const AppointmentBookingModal = ({
           toast.error(data.message);
         } else if (data.status === "error") {
           toast.error(data.message);
-        } else {
+        } else if (data.status === "Booked Successfully") {
           toast.success(data.status);
+        } else {
+          toast.error(data.status);
         }
         refetch();
         setTreatment(null);

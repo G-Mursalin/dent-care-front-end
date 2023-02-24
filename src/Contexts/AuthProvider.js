@@ -20,6 +20,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [runThisComponentAgain, setRunThisComponentAgain] = useState(false);
 
   const providerLogin = (provider) => {
     setLoading(true);
@@ -83,6 +84,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     userLogin,
     loading,
+    setRunThisComponentAgain,
     verifyEmail,
     userUpdateProfile,
     setLoading,

@@ -1,14 +1,17 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import ErrorMessage from "../../Shared/ErrorMessage/ErrorMessage";
+import Loading from "../../Shared/Loading/Loading";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
   const data = useLoaderData();
+  const navigation = useNavigation();
+
   const {
     _id,
     serviceName,
@@ -17,9 +20,11 @@ const Payment = () => {
     appointmentDate,
     patientName,
     patientEmail,
+    paid,
   } = data.data.bookings[0];
 
-  // Handle Errors From Server
+  // Handle Errors From Server and Loading
+  if (navigation.status === "loading") return <Loading />;
   if (data.status === "fail") return <ErrorMessage message={data.message} />;
   if (data.status === "error") return <ErrorMessage message={data.message} />;
 
@@ -68,6 +73,7 @@ const Payment = () => {
                 patientEmail={patientEmail}
                 servicePrice={servicePrice}
                 _id={_id}
+                paid={paid}
               />
             </Elements>
           </div>
