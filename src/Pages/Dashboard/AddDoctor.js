@@ -9,7 +9,6 @@ import Loading from "../Shared/Loading/Loading";
 
 const AddDoctor = () => {
   const [wait, setWait] = useState(false);
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const {
     register,
@@ -72,7 +71,7 @@ const AddDoctor = () => {
 
   return (
     <section>
-      <h2 className="my-3 text-2xl">Add Doctor</h2>
+      <h2 className="my-3 text-2xl px-3">Add Doctor</h2>
       <div className="mb-10 md:mt-10 mt-4 md:px-16 px-5">
         <div className="bg-base-100 shadow-xl">
           <div className="card-body">
@@ -204,8 +203,6 @@ const AddDoctor = () => {
                   )}
                 </label>
               </div>
-
-              {error ? <span className="text-red-600">{error}</span> : null}
               <button
                 type="submit"
                 className="btn text-white mt-2 bg-accent border-0 py-2 px-6 w-full focus:outline-none cursor-pointer rounded-lg text-lg"

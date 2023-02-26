@@ -44,11 +44,11 @@ const MyProfile = () => {
 
   return (
     <section>
-      <h2 className="my-3 text-2xl">My Profile</h2>
+      <h2 className="my-3 text-2xl px-3">My Profile</h2>
       <div className="flex items-center flex-col lg:flex-row px-5">
         <img
           src={user?.photoURL}
-          className="max-w-sm rounded-full shadow-2xl"
+          className="max-w-sm rounded-full ring ring-primary shadow-2xl"
           style={{ width: "200px", height: "200px", objectFit: "cover" }}
           alt="profile"
         />

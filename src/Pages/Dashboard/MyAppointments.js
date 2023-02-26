@@ -32,10 +32,10 @@ const MyAppointments = () => {
 
   return (
     <section>
-      <h2 className="my-3 text-2xl">
+      <h2 className="my-3 text-2xl px-3">
         My Total Appointment: {appointments.results}
       </h2>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto px-5 mt-5">
         <table className="table w-full">
           <thead>
             <tr>

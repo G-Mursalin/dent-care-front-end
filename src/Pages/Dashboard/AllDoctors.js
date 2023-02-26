@@ -59,8 +59,8 @@ const AllDoctors = () => {
 
   return (
     <section>
-      <h2 className="my-3 text-2xl">Total Doctors: {doctors.results} </h2>
-      <div className="overflow-x-auto">
+      <h2 className="my-3 text-2xl px-3">Total Doctors: {doctors.results} </h2>
+      <div className="overflow-x-auto px-5 mt-5">
         <table className="table w-full">
           <thead>
             <tr>

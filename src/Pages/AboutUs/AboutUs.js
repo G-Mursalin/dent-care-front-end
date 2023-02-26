@@ -1,7 +1,8 @@
 import React from "react";
+import ErrorMessage from "../Shared/ErrorMessage/ErrorMessage";
 
 const AboutUs = () => {
-  return <div>About Us</div>;
+  return <ErrorMessage message={"Coming Soon"} />;
 };
 
 export default AboutUs;
