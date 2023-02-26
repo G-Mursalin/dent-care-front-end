@@ -18,7 +18,7 @@ const AddDoctor = () => {
 
   // Get services-name From Backend
   const { isLoading, data: servicesName } = useQuery(["servicesName"], () =>
-    fetch("http://localhost:5000/api/v1/services/name", {
+    fetch("https://dent-care.onrender.com/api/v1/services/name", {
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -47,7 +47,7 @@ const AddDoctor = () => {
     };
 
     // Send Data to Backend
-    fetch("http://localhost:5000/api/v1/doctors", {
+    fetch("https://dent-care.onrender.com/api/v1/doctors", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

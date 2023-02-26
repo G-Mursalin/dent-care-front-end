@@ -13,7 +13,7 @@ const MyAppointments = () => {
     ["appointments", user?.email],
     () =>
       fetch(
-        `http://localhost:5000/api/v1/bookings?patientEmail=${user?.email}`,
+        `https://dent-care.onrender.com/api/v1/bookings?patientEmail=${user?.email}`,
         {
           headers: {
             "Content-type": "application/json",

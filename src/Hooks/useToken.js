@@ -6,7 +6,7 @@ const useToken = (email) => {
 
   useEffect(() => {
     if (email) {
-      fetch(`http://localhost:5000/api/v1/users/jwt?email=${email}`, {
+      fetch(`https://dent-care.onrender.com/api/v1/users/jwt?email=${email}`, {
         headers: {
           "Content-type": "application/json",
         },

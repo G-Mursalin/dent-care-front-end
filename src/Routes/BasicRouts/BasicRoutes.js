@@ -92,12 +92,15 @@ export const router = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment />,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/v1/bookings?_id=${params.id}`, {
-            headers: {
-              "Content-type": "application/json",
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }),
+          fetch(
+            `https://dent-care.onrender.com/api/v1/bookings?_id=${params.id}`,
+            {
+              headers: {
+                "Content-type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+            }
+          ),
       },
       {
         path: "/dashboard/my-profile",

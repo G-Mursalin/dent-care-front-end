@@ -20,14 +20,17 @@ const CheckoutForm = ({
   const elements = useElements();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/payment/create-payment-intent", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-      body: JSON.stringify({ price: servicePrice }),
-    })
+    fetch(
+      "https://dent-care.onrender.com/api/v1/payment/create-payment-intent",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({ price: servicePrice }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.clientSecret) {
@@ -91,7 +94,7 @@ const CheckoutForm = ({
       paid: true,
     };
 
-    fetch(`http://localhost:5000/api/v1/bookings/${_id}`, {
+    fetch(`https://dent-care.onrender.com/api/v1/bookings/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json",

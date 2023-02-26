@@ -19,7 +19,7 @@ const AllUsers = () => {
   const handleDeleteUser = (data) => {
     console.log(data._id);
     // Send Data to Backend
-    fetch(`http://localhost:5000/api/v1/users/${data._id}`, {
+    fetch(`https://dent-care.onrender.com/api/v1/users/${data._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -45,7 +45,7 @@ const AllUsers = () => {
     data: users,
     refetch,
   } = useQuery(["users"], () =>
-    fetch("http://localhost:5000/api/v1/users", {
+    fetch("https://dent-care.onrender.com/api/v1/users", {
       headers: {
         "Content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -59,7 +59,7 @@ const AllUsers = () => {
   if (users.status === "error") return <ErrorMessage message={users.message} />;
 
   const handleMakeAdmin = (id) => {
-    fetch(`http://localhost:5000/api/v1/users/${id}`, {
+    fetch(`https://dent-care.onrender.com/api/v1/users/${id}`, {
       method: "PATCH",
       headers: {
         "Content-type": "application/json; charset=UTF-8",

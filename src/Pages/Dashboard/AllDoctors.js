@@ -14,7 +14,7 @@ const AllDoctors = () => {
     data: doctors,
     refetch,
   } = useQuery(["doctors"], () =>
-    fetch("http://localhost:5000/api/v1/doctors", {
+    fetch("https://dent-care.onrender.com/api/v1/doctors", {
       headers: {
         "Content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -30,7 +30,7 @@ const AllDoctors = () => {
   //   Handle Delete Doctor
   const handleDeleteDoctor = (data) => {
     // Send Data to Backend
-    fetch(`http://localhost:5000/api/v1/doctors/${data._id}`, {
+    fetch(`https://dent-care.onrender.com/api/v1/doctors/${data._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

@@ -46,6 +46,8 @@ const Login = () => {
       <div className="card w-[500px] bg-base-100 shadow-xl">
         <div className="card-body">
           <h2 className="card-title mx-auto">Login</h2>
+          <p className="font-bold">Admin Email: admin@gmail.com</p>
+          <p className="font-bold">Admin Password: 123456</p>
           <form onSubmit={handleSubmit(onSubmitForm)}>
             <div className="form-control w-full">
               <label className="label">

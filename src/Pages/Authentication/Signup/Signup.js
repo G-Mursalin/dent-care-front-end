@@ -50,7 +50,7 @@ export const Signup = () => {
 
   // Save User To Backend Database
   const saveUserToDatabase = (email) => {
-    fetch("http://localhost:5000/api/v1/users", {
+    fetch("https://dent-care.onrender.com/api/v1/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

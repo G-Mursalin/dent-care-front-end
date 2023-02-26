@@ -38,7 +38,7 @@ const AppointmentBookingModal = ({
     };
 
     //  Sent Booking data to the server
-    fetch("http://localhost:5000/api/v1/bookings", {
+    fetch("https://dent-care.onrender.com/api/v1/bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

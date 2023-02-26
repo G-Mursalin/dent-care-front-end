@@ -4,7 +4,7 @@ const useAdmin = () => {
   const [admin, setAdmin] = useState(false);
   const [adminIsLoading, setAdminIsLoading] = useState(true);
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/users/admin", {
+    fetch("https://dent-care.onrender.com/api/v1/users/admin", {
       method: "GET",
       headers: {
         "Content-type": "application/json",

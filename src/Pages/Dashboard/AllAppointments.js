@@ -14,12 +14,15 @@ const AllAppointments = () => {
     data: bookingsGroup,
     refetch,
   } = useQuery(["bookingGroup"], () =>
-    fetch("http://localhost:5000/api/v1/bookings/bookings-group-date", {
-      headers: {
-        "Content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }).then((res) => res.json())
+    fetch(
+      "https://dent-care.onrender.com/api/v1/bookings/bookings-group-date",
+      {
+        headers: {
+          "Content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    ).then((res) => res.json())
   );
 
   // Handle Errors and Loading
@@ -37,7 +40,7 @@ const AllAppointments = () => {
   //   Handle Delete Booking
   const handleDeleteBooking = (data) => {
     // Send Data to Backend
-    fetch(`http://localhost:5000/api/v1/bookings/${data._id}`, {
+    fetch(`https://dent-care.onrender.com/api/v1/bookings/${data._id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

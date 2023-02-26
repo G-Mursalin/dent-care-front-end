@@ -19,12 +19,15 @@ const AvailableAppointment = ({ onSelectedDate }) => {
     data: services,
     refetch,
   } = useQuery(["services", formattedDate], () =>
-    fetch(`http://localhost:5000/api/v1/services?date=${formattedDate}`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    }).then((res) => res.json())
+    fetch(
+      `https://dent-care.onrender.com/api/v1/services?date=${formattedDate}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    ).then((res) => res.json())
   );
 
   // Handle Errors and Loading
